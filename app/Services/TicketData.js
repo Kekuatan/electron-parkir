@@ -46,8 +46,8 @@ function strReplaceCss (data) {
     return a
 }
 
-function generateData(barcode_number,callback){
-    let code = barcode_number//generateBarcodeNumber()
+ function generateData (callback){
+    let code = generateBarcodeNumber()
     let barcodeConfig = {
         bcid:        'qrcode',       // Barcode type
         text:        code,    // Text to encode
@@ -159,7 +159,7 @@ function barcodeText(barcodeCode){
         value: barcodeCode,
         style: `text-align:center;`,
         css: { 
-        "margin-left": '25px',
+        // "margin-left": '25px',
         "font-weight": "700", 
         "font-size": "16px", 
         "letter-spacing" : '8px',"font-family": "sans-serif", "margin-bottom": '20px' },

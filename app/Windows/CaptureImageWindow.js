@@ -1,20 +1,23 @@
-var windowsDefault = require('./DefaultSettingWindow')
-const {windowsEnum} = require("../../Enum/PathLocationEnum");
-const {ipcMain: ipc} = require("electron");
+var windowsDefault = require('./Extends/DefaultSettingWindow')
 const fs = require("fs");
+
+const { app, BrowserWindow, protocol, ipcMain} = require("electron");
+const path = require("path");
+
 class CaptureImageWindow extends windowsDefault{
     constructor() {
         super({width: 800, height: 600,
             show: false, // or true
             webPreferences: {
                 nodeIntegration: true}})
-        this.win.loadURL(windowsEnum.view["capture-image"]);
+        this.view = path.join(process.cwd(), 'resources', 'views', 'capture-image', 'capture-image.html')
+        //this.win.loadURL(windowsEnum.view["capture-image"]);
         this.eventClickButton()
     }
 
 
     eventClickButton( ) {
-        ipc.on('invokeAction', async (event, data) => {
+        this.capture = async () => {
             try {
                 await this.win.capturePage()
                     .then(image => {
@@ -25,9 +28,8 @@ class CaptureImageWindow extends windowsDefault{
             } catch (e) {
                 console.log(e)
             }
-            event.sender.send('actionReply', data);
-        });
+        };
     }
 }
 
-module.exports = CaptureImageWindow
+module.exports = new CaptureImageWindow()

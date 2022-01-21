@@ -1,3 +1,4 @@
+const { app, BrowserWindow, protocol, ipcMain} = require("electron");
 var windowsDefault = require('./Extends/DefaultSettingWindow')
 const path = require("path");
 const {TicketData} = require("../../app/Services/TicketData");
@@ -8,12 +9,14 @@ class TicketPrintingWindow extends windowsDefault{
             width: '839px',
             height: '483px',
             webPreferences: {
-                preload: path.join(__dirname, 'resources', 'views', 'ticket', 'ticket.js')
+                preload: path.join(process.cwd(), 'resources', 'views', 'ticket', 'ticket.js')
             },
             frame: false
         })
-
+        this.data = []
         this.eventClickButton()
+        this.view = path.join(process.cwd(), 'resources', 'views', 'ticket', 'ticket.html');
+
         //mainWindow.webContents.openDevTools()
         //this.win.loadFile(path.join(__dirname, 'resources', 'views', 'ticket', 'ticket.html'));
     }
@@ -37,10 +40,11 @@ class TicketPrintingWindow extends windowsDefault{
             this.win = new BrowserWindow();
             this.win.webContents.openDevTools()
 
-            this.win.loadFile(path.join(__dirname, 'resources', 'views', 'ticket', 'ticket.html'), {
-                query: {queryKey: JSON.stringify(b)},
+            this.win.loadFile(this.view, {
+                query: {queryKey: JSON.stringify(this.data)},
                 hash: "hashValue",
             });
+
 
             var options = {
                 silent: false,
@@ -57,6 +61,9 @@ class TicketPrintingWindow extends windowsDefault{
                 footer: 'Footer of the Page'
             }
 
+            setTimeout(()=>{
+                this.win.close()
+            },2000)
             return this.data
 
             // workerWindow.webContents.print(options, (success, failureReason) => {
@@ -75,4 +82,4 @@ class TicketPrintingWindow extends windowsDefault{
 
 }
 
-module.exports = HomeWindow
+module.exports = new TicketPrintingWindow()

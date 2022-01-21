@@ -1,0 +1,16 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "Test for printer - thermal printers too",
+  "main": "main.js",
+  "productName": "parkir-exit",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Dean k",
+  "devDependencies": {},
+  "dependencies": {
+    "bwip-js": "^3.0.4",
+    "electron-reload": "^2.0.0-alpha.1"
+  }
+}
