@@ -47,34 +47,37 @@ class TicketPrintingWindow extends windowsDefault{
 
 
             var options = {
-                silent: false,
-                printBackground: true,
+                silent: true,
+                printBackground: false,
                 color: false,
                 margin: {
-                    marginType: 'printableArea'
+                    marginType: 'custom',
+                    top : 0,
+                    right:0,
+                    left:0,
+                    bottom:0
                 },
+                pageSize: 'A5',
                 landscape: false,
                 pagesPerSheet: 1,
                 collate: false,
                 copies: 1,
-                header: 'Header of the Page',
-                footer: 'Footer of the Page'
             }
+                setTimeout(()=>{
+                    this.win.webContents.print(options, (success, failureReason) => {
+                        if (!success) {
+                            console.log(failureReason);
+                        } else{
+                            if(this.win){
+                                //   this.win.close();
+                            }
+                            return this.data
+                        }
 
-            setTimeout(()=>{
-                this.win.close()
-            },2000)
-            return this.data
+                        console.log('Print Initiated');
+                    });
+                },500)
 
-            // workerWindow.webContents.print(options, (success, failureReason) => {
-            //   if (!success) {
-            //     console.log(failureReason);
-            //   } else{
-            //     workerWindow.close();
-            //   }
-            //
-            //   console.log('Print Initiated');
-            // });
 
         }
     }

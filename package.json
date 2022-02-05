@@ -5,12 +5,20 @@
   "main": "main.js",
   "productName": "parkir-exit",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "install": "electron-rebuild"
   },
   "author": "Dean k",
-  "devDependencies": {},
+  "devDependencies": {
+    "electron": "^13.1.6",
+    "electron-rebuild": "^2.3.5"
+  },
   "dependencies": {
+    "any-shell-escape": "^0.1.1",
     "bwip-js": "^3.0.4",
-    "electron-reload": "^2.0.0-alpha.1"
+    "electron-reload": "^2.0.0-alpha.1",
+    "ffmpeg-static": "^4.4.1",
+    "serialport": "^9.2.0",
+    "tableify": "^1.1.0"
   }
 }

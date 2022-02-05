@@ -2,9 +2,34 @@
 const { app, BrowserWindow, protocol, ipcMain} = require("electron");
 const path = require("path");
 
+
 var HomeWindow = require('./app/Windows/HomeWindow.js')
 var TicketPrintingWindow = require('./app/Windows/TicketPrintingWindow.js')
 var CaptureImageWindow = require('./app/Windows/CaptureImageWindow.js')
+
+// const argv = process.argv.slice(2)
+// if (argv.includes('-h') || argv.includes('--help')) {
+//     console.info(`
+// This is just a simple CLI wrapper around the powerful ffmpeg CLI tool.
+// This script just showcases how to use ffmpeg-static; It wouldn't make
+// sense to hide a flexible tool behind a limited wrapper script.
+// Usage:
+// 	./example.js <src> <dest>
+// Example:
+// 	./example.js src-audio-file.m4a dest-audio-file.mp3
+// `)
+//     process.exit(0)
+// }
+//
+// const [src, dest] = argv
+// if (!src) {
+//     console.error('Missing <src> positional argument.')
+//     process.exit(1)
+// }
+// if (!dest) {
+//     console.error('Missing <dest> positional argument.')
+//     process.exit(1)
+// }
 
 // console.log(HomeWindow)
 // windows
@@ -38,6 +63,7 @@ var CaptureImageWindow = require('./app/Windows/CaptureImageWindow.js')
 //
 // }
 
+app.allowRendererProcessReuse=false
 
 ipcMain.handle('some-name', async ()=>{
     const saveFile = () => {
@@ -77,7 +103,12 @@ app.whenReady().then(() => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on("window-all-closed", function () {
-    if (process.platform !== "darwin") app.quit();
+    if (process.platform !== "darwin") {
+        var cmd = 'ffmpeg...'
+        var child = exec(cmd, function(err, stdout, stderr) {})
+        child.stdin.write('q')
+        app.quit();
+    }
 
 });
 

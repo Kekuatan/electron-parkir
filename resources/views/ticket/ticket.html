@@ -3,13 +3,20 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>JS Bin</title>
     <script src="../../libraries/vue/vue.js"></script>
 
 </head>
+
+<style>
+    /*@page {*/
+    /*    size: 3in 15in;*/
+    /*}*/
+    /*body{*/
+    /*    height:300px;*/
+    /*}*/
+</style>
 <body>
-<p id="name"> worker </p>
-<div id='app' class="modal-card-body">
+<div id='app' class="modal-card-body" style="max-height:300px">
     <div v-for="item in modalDataContent">
         <p v-if="item['type'] == 'text' && item['name'] != 'ticket_time' && item['name'] != 'barcode_data_img'"
            v-bind:style="item['style'] + strReplaceCss(item['css'])"> {{ item['value']}}</p>

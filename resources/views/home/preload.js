@@ -2,6 +2,88 @@
 // It has the same sandbox as a Chrome extension.
 
 const {contextBridge, ipcRenderer} = require("electron");
+const serialport = require('serialport')
+const tableify = require('tableify')
+const ByteLength = require('@serialport/parser-byte-length')
+const Readline = require('@serialport/parser-readline')
+
+const port = new serialport('COM4',
+    {
+        echo: true,
+        record: true,
+        baudRate: 9600,
+        dataBits : 8,
+        parity:'none',
+        stopBits: 1,
+        rtscts: false
+    })
+
+
+const path = require("path");
+var pathToFfmpeg = require('ffmpeg-static');
+
+const shell = require('any-shell-escape')
+const {exec} = require('child_process')
+console.log(pathToFfmpeg);
+
+// process.exit(1)
+const makeMp3 = shell([
+    pathToFfmpeg,
+    // '-ss', '1',
+    // 'error',
+
+    '-i', 'rtsp://admin:admin@192.168.10.51:554',
+    // '-q:v', '4',
+    '-frames:v', '1', '-q:v', '2',
+    '-strftime','1',
+    path.join(process.cwd(), "%Y-%m-%d_%H-%M-%S.jpg"),
+])
+
+
+
+
+// const parser = port.pipe(new Readline());
+
+// parser.on('readable', function () {
+//     console.log('Data readable:', port.read())
+// })
+//
+// // Switches the port into "flowing mode"
+// parser.on('data', function (data) {
+//     console.log('Data data:', data)
+// })
+//
+// port.on('readable', function () {
+//     console.log('Data port readable:', port.read())
+// })
+
+
+
+// Switches the port into "flowing mode"
+port.on('data', function (data) {
+    console.log('Data port  data:', data)
+    console.log('Data port  data:', data.toString())
+    let a = async  (someArgument) => {
+        return await ipcRenderer.invoke('some-name', someArgument).then((result) => {
+            return result
+        })
+    }
+
+    if (data.toString() == '*IN1ON#'){
+        port.write('TRIG1#');
+        //a()
+        exec(makeMp3, (err) => {
+            if (err) {
+                console.error(err)
+                process.exit(1)
+            } else {
+                console.info('done!')
+            }
+        })
+    }
+
+})
+
 
 contextBridge.exposeInMainWorld(
     "api", {
@@ -31,6 +113,9 @@ contextBridge.exposeInMainWorld(
         }
     }
 );
+
+
+
 
 const crypto = require('crypto')
 contextBridge.exposeInMainWorld('nodeCrypto', {
