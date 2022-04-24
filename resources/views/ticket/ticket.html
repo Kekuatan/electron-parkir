@@ -16,15 +16,15 @@
     /*}*/
 </style>
 <body>
-<div id='app' class="modal-card-body" style="max-height:300px">
+<div id='app' class="modal-card-body" style="max-height:500px">
     <div v-for="item in modalDataContent">
         <p v-if="item['type'] == 'text' && item['name'] != 'ticket_time' && item['name'] != 'barcode_data_img'"
            v-bind:style="item['style'] + strReplaceCss(item['css'])"> {{ item['value']}}</p>
         <p v-if="item['name'] == 'ticket_time'" v-bind:style="item['style'] + strReplaceCss(item['css'])">
             {{ item['value']}}</p>
-        <!--                    <div v-if="item['type'] == 'image'">-->
-        <!--                        <img class="is-rounded" :src="item['path']" alt="Placeholder image">-->
-        <!--                    </div>-->
+                            <div v-if="item['type'] == 'image'" >
+                                <img class="is-rounded" :src="item['path']" v-bind:style="item['style'] + strReplaceCss(item['css'])" alt="Placeholder image">
+                            </div>
 
         <div v-if="item['name'] == 'barcode_data_img'"
              v-bind:style="item['style'] + strReplaceCss(item['css'])" v-html="item['value']">

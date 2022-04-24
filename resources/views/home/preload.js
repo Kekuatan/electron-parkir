@@ -32,11 +32,11 @@ const makeMp3 = shell([
     // '-ss', '1',
     // 'error',
 
-    '-i', 'rtsp://admin:admin@192.168.10.51:554',
+    '-i', 'rtsp://admin:admin@192.168.110.51:554',
     // '-q:v', '4',
     '-frames:v', '1', '-q:v', '2',
     '-strftime','1',
-    path.join(process.cwd(), "%Y-%m-%d_%H-%M-%S.jpg"),
+    path.join('Z:', '%Y-%m-%d_%H-%M-%S.jpg'),
 ])
 
 

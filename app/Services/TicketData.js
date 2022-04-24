@@ -46,14 +46,14 @@ function strReplaceCss (data) {
     return a
 }
 
- function generateData (callback){
-    let code = generateBarcodeNumber()
+ function generateData (response, callback){
+    let code = response.barcode_no// generateBarcodeNumber()
     let barcodeConfig = {
         bcid:        'qrcode',       // Barcode type
         text:        code,    // Text to encode
         scaleX:       2,               // 3x scaling factor
         scaleY:       3,
-        height:      10,              // Bar height, in millimeters
+        height:     10,              // Bar height, in millimeters
         includetext: false,            // Show human-readable text
         textxalign:  'center',        // Always good to set this
     }
@@ -71,7 +71,7 @@ function strReplaceCss (data) {
                     this.companyLogo,
                     this.companyName,
                     this.companyAddress,
-                    this.ticketTime(),
+                    this.ticketTime(response),
                     this.barcode(gifBase64),
                     this.barcodeText(code),
                     this.additionalText1,
@@ -90,17 +90,18 @@ function topLeftCorner(){
         type: "text",
         value: `||----`,
         style: `text-align:left;`,
-        css: { "font-size": "12px" },
+        css: { "font-size": "12px", },
       }
 }
 
 function companyLogo(){
     return {
         type: "image",
-        path: path.join(__dirname, "../../assets/logo.png"), // file path
+        path: path.join(__dirname, "../../resources/logo.svg"), // file path
         position: "center", // position of image: 'left' | 'center' | 'right'
         width: "auto", // width of image in px; default: auto
         height: "60px", // width of image in px; default: 50 or '50px'
+        css: {"height" : '60px', 'width' : "auto", "display":"block", "margin" : "auto"},
       }
 }
 
@@ -109,7 +110,7 @@ function companyName(){
         type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
         value: "PT. INDONESIA RAYA",
         style: `text-align:center;`,
-        css: { "font-weight": "700", "font-size": "12px", "font-family": "sans-serif"},
+        css: { "font-weight": "700", "font-size": "16px", "font-family": "sans-serif"},
       }
 }
 
@@ -118,21 +119,25 @@ function companyAddress(){
         type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
         value: "Indonesia Jaya Raya Persija Jakarta Indonesia",
         style: `text-align:center;`,
-        css: { "font-weight": "700", "font-size": "10px", "font-family": "sans-serif", "margin-bottom" : '10px' },
+        css: { "font-weight": "60", "font-size": "10px", "font-family": "sans-serif", "margin-bottom" : '0px', "margin-top": "-15px", },
       }
 }
 
-function ticketTime(){
+function ticketTime(response){
     let date = new Date().toLocaleString("id-IN")
     if (typeof (this.gate) != 'undefined' && typeof (this.type) != 'undefined'){
         date = date + ' ' + this.type + '/' + this.gate
+    }
+    if (response){
+        let name = response.name ?? 'pm-1'
+        date = new Date(response.start_at).toLocaleString("id-IN") +' '+ name.toUpperCase()
     }
     return {
         type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table'
         value:date ,
     
         css: {
-          "font-size": "12px",
+          "font-size": "14px",
           "font-family": "sans-serif",
           "text-align": "center",
           "margin-top": '20px',
@@ -147,7 +152,7 @@ function barcode(dataImage){
         type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
         value: dataImage,
         style: `text-align:center;`,
-        css: { "font-size": "16px", "margin-bottom": '5px'},
+        css: { "font-size": "14px", "margin-bottom": '10px'},
       }
   
 }
@@ -160,9 +165,9 @@ function barcodeText(barcodeCode){
         style: `text-align:center;`,
         css: { 
         // "margin-left": '25px',
-        "font-weight": "700", 
-        "font-size": "16px", 
-        "letter-spacing" : '8px',"font-family": "sans-serif", "margin-bottom": '20px' },
+        "font-weight": "60",
+        "font-size": "14px",
+        "letter-spacing" : '1px',"font-family": "sans-serif", "margin-bottom": '5px',"margin-top":'-10px' },
       }
 }
 
@@ -173,8 +178,7 @@ function additionalText1 () {
      type: "text",
      value: "PASTIKAN KENDARAAN ANDA TERKUNCI",
      style: `text-align:center;`,
-     css: {
-          "font-weight": "700", "font-size": "10px", "font-family": "sans-serif" }
+     css: {"font-weight": "60", "font-size": "14px", "font-family": "sans-serif", }
    }
 }
 
@@ -182,9 +186,9 @@ function additionalText2(){
     return {
         name : 'additional_text_2',
      type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-     value: "TIKETJANGAN SAMPAI HILANG",
+     value: "TIKET JANGAN SAMPAI HILANG",
      style: `text-align:center;`,
-     css: { "font-weight": "700", "font-size": "10px", "font-family": "sans-serif", "margin-bottom" : '10px' },
+     css: { "font-weight": "60", "font-size": "14px", "font-family": "sans-serif", "margin-bottom" : '10px',"margin-top":'-10px' },
    }
 }
 

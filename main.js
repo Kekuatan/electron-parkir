@@ -5,7 +5,7 @@ const path = require("path");
 
 var HomeWindow = require('./app/Windows/HomeWindow.js')
 var TicketPrintingWindow = require('./app/Windows/TicketPrintingWindow.js')
-var CaptureImageWindow = require('./app/Windows/CaptureImageWindow.js')
+// var CaptureImageWindow = require('./app/Windows/CaptureImageWindow.js')
 
 // const argv = process.argv.slice(2)
 // if (argv.includes('-h') || argv.includes('--help')) {
@@ -69,7 +69,7 @@ ipcMain.handle('some-name', async ()=>{
     const saveFile = () => {
         return new Promise((resolve, reject) => {
 
-            CaptureImageWindow.capture()
+            // CaptureImageWindow.capture()
             resolve()
         })
     }
@@ -82,7 +82,7 @@ ipcMain.handle('some-name', async ()=>{
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-    CaptureImageWindow.createWindows()
+    // CaptureImageWindow.createWindows()
     HomeWindow.createWindows()
     // protocol.registerSchemesAsPrivileged([
     //   {

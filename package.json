@@ -14,11 +14,14 @@
     "electron-rebuild": "^2.3.5"
   },
   "dependencies": {
+    "@pokusew/pcsclite": "^0.6.0",
     "any-shell-escape": "^0.1.1",
     "bwip-js": "^3.0.4",
     "electron-reload": "^2.0.0-alpha.1",
     "ffmpeg-static": "^4.4.1",
+    "nfc-pcsc": "^0.8.1",
     "serialport": "^9.2.0",
-    "tableify": "^1.1.0"
+    "tableify": "^1.1.0",
+    "xhr2": "^0.2.1"
   }
 }

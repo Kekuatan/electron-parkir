@@ -23,7 +23,7 @@ class windowsDefault {
     }
 
     initWindows() {
-        //this.win.openDevTools();
+        this.win.openDevTools();
         this.win.on('closed', function() {
             // Dereference the window object, usually you would store windows
             // in an array if your app supports multi windows, this is the time
@@ -35,7 +35,7 @@ class windowsDefault {
         // mainWindow.maximize();
         this.win.setMenu(null);
         // Open the DevTools.
-        this.win.webContents.openDevTools()
+        // this.win.webContents.openDevTools()
     }
 }
 

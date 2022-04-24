@@ -7,17 +7,21 @@ const path = require("path");
 class CaptureImageWindow extends windowsDefault{
     constructor() {
         super({width: 800, height: 600,
-            show: false, // or true
+            show: true, // or true
+            win: false,
             webPreferences: {
                 nodeIntegration: true}})
         this.view = path.join(process.cwd(), 'resources', 'views', 'capture-image', 'capture-image.html')
         //this.win.loadURL(windowsEnum.view["capture-image"]);
-        this.eventClickButton()
+        // this.eventClickButton()
     }
 
 
     eventClickButton( ) {
+        console.log('try to capture image')
+        console.log(this.win)
         this.capture = async () => {
+            console.log('-- loading')
             try {
                 await this.win.capturePage()
                     .then(image => {
@@ -29,6 +33,8 @@ class CaptureImageWindow extends windowsDefault{
                 console.log(e)
             }
         };
+        this.capture()
+        console.log('done try to capture image')
     }
 }
 

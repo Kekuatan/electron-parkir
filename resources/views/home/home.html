@@ -4,7 +4,9 @@
     function clickAku(){
         (async () => {
             const response = await window.api.doAction('some-name')
+            console.log('-----dari some-name-------')
             console.log(response)
+            console.log('--------------------')
         })();
 
         (async () => {
