@@ -9,10 +9,10 @@ class AuthBasicService {
 
     }
 
-    basiAuth () {
+    basiAuth  = function () {
         var xmlHttp = new XMLHttpRequest();
         var data =JSON.stringify({'grant_type': 'client_credentials'});
-        let url = ConfigEnum.auth.base_url + '/oauth/token'
+        let url = ConfigEnum.base_url + '/oauth/token'
 
 
         console.log('UNSENT: ', xmlHttp.status);
@@ -36,5 +36,5 @@ class AuthBasicService {
 
 // now we export the class, so other modules can create Cat objects
 module.exports = {
-    AuthBasicService: AuthBasicService
+    AuthBasicService: new AuthBasicService()
 }

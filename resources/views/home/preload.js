@@ -71,7 +71,7 @@ port.on('data', function (data) {
 
     if (data.toString() == '*IN1ON#'){
         port.write('TRIG1#');
-        //a()
+        a()
         exec(makeMp3, (err) => {
             if (err) {
                 console.error(err)

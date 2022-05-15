@@ -5,6 +5,7 @@ const path = require("path");
 
 var HomeWindow = require('./app/Windows/HomeWindow.js')
 var TicketPrintingWindow = require('./app/Windows/TicketPrintingWindow.js')
+const {CaptureImageService} = require("./app/Services/CaptureImageService");
 // var CaptureImageWindow = require('./app/Windows/CaptureImageWindow.js')
 
 // const argv = process.argv.slice(2)
@@ -83,6 +84,7 @@ ipcMain.handle('some-name', async ()=>{
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
     // CaptureImageWindow.createWindows()
+    CaptureImageService.takeImage()
     HomeWindow.createWindows()
     // protocol.registerSchemesAsPrivileged([
     //   {
@@ -94,6 +96,10 @@ app.whenReady().then(() => {
         // dock icon is clicked and there are no other windows open.
         if (BrowserWindow.getAllWindows().length === 0) createWindow();
     });
+    app.on("closed", function () {
+       console.log('closed')
+    });
+
 
 
 });
@@ -103,6 +109,9 @@ app.whenReady().then(() => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on("window-all-closed", function () {
+    console.log('try to close')
+    CaptureImageService.ffmpegProcess.stdin.write('q')
+
     if (process.platform !== "darwin") {
         var cmd = 'ffmpeg...'
         var child = exec(cmd, function(err, stdout, stderr) {})
@@ -111,6 +120,11 @@ app.on("window-all-closed", function () {
     }
 
 });
+app.on("exit", function () {
+    CaptureImageService.ffmpegProcess.stdin.write('q')
+    console.log('closed')
+});
+
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
